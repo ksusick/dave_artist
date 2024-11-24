@@ -1,0 +1,43 @@
+<?php
+
+$name = $_POST["name"];
+$email = $_POST["email"];
+$subject = $_POST["subject"];
+$msg = $_POST["msg"];
+
+require "vendor/autoload.php";
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+
+$mail = new PHPMailer(true);
+
+// $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+//Configure an SMTP
+
+$mail->isSMTP();
+$mail->SMTPAuth = true;
+
+$mail->Host = "smtp.gmail.com";
+$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+$mail->Port = 587;
+
+$mail->Username = "kent.susick@gmail.com";
+$mail->Password = "rzrk agne mele cfby";
+
+// Sender information
+$mail->setFrom($email, $name);
+
+// Primary recipients (email client)
+$mail->addAddress("kent.susick@gmail.com", "Kent");
+
+$mail->Subject = $subject;
+$mail->Body = $msg;
+
+$mail->send();
+
+echo "email sent";
+
+$mail->smtpClose();
+
+header("Location: sent.html");
